@@ -1,0 +1,42 @@
+schema: xgc2.product.v1
+id: xgc2-mecanum-description
+name: XGC2 Mecanum Description
+version: 0.1.0-1
+kind: ros1-apt
+summary: ROS Noetic visual description assets for the XGC2 Mecanum UGV.
+groups:
+- gazebo-sim
+- ugv-tracking
+ros:
+  distro: noetic
+  packages:
+  - mecanum_description
+apt:
+  distribution: focal
+  install:
+  - ros-noetic-xgc2-mecanum-description
+  packages:
+  - ros-noetic-xgc2-mecanum-description
+  package_architectures:
+    ros-noetic-xgc2-mecanum-description:
+    - amd64
+    - arm64
+  depends:
+  - ros-noetic-urdf
+usage:
+  install: |
+    sudo apt update
+    sudo apt install ros-noetic-xgc2-mecanum-description
+  smoke_test: |
+    rospack find mecanum_description
+    test -f /opt/ros/noetic/share/mecanum_description/urdf/mecanum_visual.urdf
+ownership:
+  paths:
+  - /opt/ros/noetic/share/mecanum_description
+release:
+  repository: lxk36/xgc2-mecanum-description
+  ref: noetic
+  workflow: release.yml
+  ci_workflow: ci.yml
+  apt_versions:
+    focal: 0.1.0-1

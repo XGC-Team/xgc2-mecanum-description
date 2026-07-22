@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>mecanum_description</name>
+  <version>0.1.0</version>
+  <description>Reusable visual description assets for the XGC2 Mecanum UGV.</description>
+
+  <maintainer email="lxk@xiaokang.local">lxk</maintainer>
+  <license>BSD-3-Clause</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>urdf</exec_depend>
+
+  <export/>
+</package>
