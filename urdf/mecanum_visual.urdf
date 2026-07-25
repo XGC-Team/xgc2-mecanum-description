@@ -47,4 +47,121 @@
     <origin xyz="-0.150 -0.150 0.05" rpy="3.141592653589793 0 0"/>
     <parent link="base_footprint"/><child link="lower_right_wheel"/><axis xyz="0 1 0"/>
   </joint>
+
+  <!-- Wheel shafts and ultrasonic rangers. The visualiser has always published
+       base_link -> <part> for each of these and drawn the mesh itself; describing
+       them here makes the URDF the whole vehicle rather than most of it, which is
+       what lets the scene stop shipping geometry a viewer can already build. Poses
+       are the visualiser's own constants, unchanged. -->
+  <link name="upper_left_wheel_shaft">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="upper_left_wheel_shaft_joint" type="fixed">
+    <origin xyz="0.150 0.108 0.05" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="upper_left_wheel_shaft"/>
+  </joint>
+
+  <link name="upper_right_wheel_shaft">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="upper_right_wheel_shaft_joint" type="fixed">
+    <origin xyz="0.150 -0.108 0.05" rpy="3.141592653589793 0 0"/>
+    <parent link="base_link"/>
+    <child link="upper_right_wheel_shaft"/>
+  </joint>
+
+  <link name="lower_left_wheel_shaft">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="lower_left_wheel_shaft_joint" type="fixed">
+    <origin xyz="-0.150 0.108 0.05" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="lower_left_wheel_shaft"/>
+  </joint>
+
+  <link name="lower_right_wheel_shaft">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="lower_right_wheel_shaft_joint" type="fixed">
+    <origin xyz="-0.150 -0.108 0.05" rpy="3.141592653589793 0 0"/>
+    <parent link="base_link"/>
+    <child link="lower_right_wheel_shaft"/>
+  </joint>
+
+  <link name="front_sensor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/urm04.STL"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="front_sensor_joint" type="fixed">
+    <origin xyz="0.205 0 0.06" rpy="1.5707963267948966 0 0"/>
+    <parent link="base_link"/>
+    <child link="front_sensor"/>
+  </joint>
+
+  <link name="left_sensor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/urm04.STL"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="left_sensor_joint" type="fixed">
+    <origin xyz="0 0.108 0.06" rpy="1.5707963267948966 0 1.5707963267948966"/>
+    <parent link="base_link"/>
+    <child link="left_sensor"/>
+  </joint>
+
+  <link name="right_sensor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/urm04.STL"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="right_sensor_joint" type="fixed">
+    <origin xyz="0 -0.108 0.06" rpy="1.5707963267948966 0 -1.5707963267948966"/>
+    <parent link="base_link"/>
+    <child link="right_sensor"/>
+  </joint>
+
+  <link name="rear_sensor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/urm04.STL"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="rear_sensor_joint" type="fixed">
+    <origin xyz="-0.201 0 0.06" rpy="1.5707963267948966 0 3.141592653589793"/>
+    <parent link="base_link"/>
+    <child link="rear_sensor"/>
+  </joint>
 </robot>
