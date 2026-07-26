@@ -1,6 +1,19 @@
 <?xml version="1.0"?>
+<!-- Viewer-only mecanum UGV. Root is base_link (matches /xgc/tf). All meshes
+     are mm-authored STL with scale 0.001 and explicit materials. -->
 <robot name="xgc2_mecanum_ugv">
-  <link name="base_footprint"/>
+  <material name="mecanum_body">
+    <color rgba="0.90 0.80 0.60 1"/>
+  </material>
+  <material name="mecanum_metal">
+    <color rgba="0.15 0.15 0.15 1"/>
+  </material>
+  <material name="mecanum_wheel">
+    <color rgba="0.60 0.60 0.60 1"/>
+  </material>
+  <material name="mecanum_sensor">
+    <color rgba="0.15 0.15 0.15 1"/>
+  </material>
 
   <link name="base_link">
     <visual>
@@ -8,57 +21,84 @@
       <geometry>
         <mesh filename="package://mecanum_description/meshes/nexus_base_link.STL" scale="0.001 0.001 0.001"/>
       </geometry>
-      <material name="body"><color rgba="0.9 0.8 0.6 1"/></material>
+      <material name="mecanum_body"/>
+    </visual>
+    <visual name="stereo_camera">
+      <origin xyz="0.205 0 0.06" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.02 0.08 0.01"/>
+      </geometry>
+      <material name="mecanum_sensor"/>
     </visual>
   </link>
-  <joint name="base_joint" type="fixed">
-    <parent link="base_footprint"/>
-    <child link="base_link"/>
-  </joint>
 
   <link name="upper_left_wheel">
-    <visual><geometry><mesh filename="package://mecanum_description/meshes/mecanum_wheel_left.STL" scale="0.001 0.001 0.001"/></geometry></visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/mecanum_wheel_left.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="mecanum_wheel"/>
+    </visual>
   </link>
-  <joint name="upper_left_wheel_joint" type="continuous">
+  <joint name="upper_left_wheel_joint" type="fixed">
     <origin xyz="0.150 0.150 0.05" rpy="0 0 0"/>
-    <parent link="base_footprint"/><child link="upper_left_wheel"/><axis xyz="0 1 0"/>
+    <parent link="base_link"/>
+    <child link="upper_left_wheel"/>
   </joint>
 
   <link name="lower_left_wheel">
-    <visual><geometry><mesh filename="package://mecanum_description/meshes/mecanum_wheel_right.STL" scale="0.001 0.001 0.001"/></geometry></visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/mecanum_wheel_right.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="mecanum_wheel"/>
+    </visual>
   </link>
-  <joint name="lower_left_wheel_joint" type="continuous">
+  <joint name="lower_left_wheel_joint" type="fixed">
     <origin xyz="-0.150 0.150 0.05" rpy="0 0 0"/>
-    <parent link="base_footprint"/><child link="lower_left_wheel"/><axis xyz="0 1 0"/>
+    <parent link="base_link"/>
+    <child link="lower_left_wheel"/>
   </joint>
 
   <link name="upper_right_wheel">
-    <visual><geometry><mesh filename="package://mecanum_description/meshes/mecanum_wheel_right.STL" scale="0.001 0.001 0.001"/></geometry></visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/mecanum_wheel_right.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="mecanum_wheel"/>
+    </visual>
   </link>
-  <joint name="upper_right_wheel_joint" type="continuous">
+  <joint name="upper_right_wheel_joint" type="fixed">
     <origin xyz="0.150 -0.150 0.05" rpy="3.141592653589793 0 0"/>
-    <parent link="base_footprint"/><child link="upper_right_wheel"/><axis xyz="0 1 0"/>
+    <parent link="base_link"/>
+    <child link="upper_right_wheel"/>
   </joint>
 
   <link name="lower_right_wheel">
-    <visual><geometry><mesh filename="package://mecanum_description/meshes/mecanum_wheel_left.STL" scale="0.001 0.001 0.001"/></geometry></visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://mecanum_description/meshes/mecanum_wheel_left.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="mecanum_wheel"/>
+    </visual>
   </link>
-  <joint name="lower_right_wheel_joint" type="continuous">
+  <joint name="lower_right_wheel_joint" type="fixed">
     <origin xyz="-0.150 -0.150 0.05" rpy="3.141592653589793 0 0"/>
-    <parent link="base_footprint"/><child link="lower_right_wheel"/><axis xyz="0 1 0"/>
+    <parent link="base_link"/>
+    <child link="lower_right_wheel"/>
   </joint>
 
-  <!-- Wheel shafts and ultrasonic rangers. The visualiser has always published
-       base_link -> <part> for each of these and drawn the mesh itself; describing
-       them here makes the URDF the whole vehicle rather than most of it, which is
-       what lets the scene stop shipping geometry a viewer can already build. Poses
-       are the visualiser's own constants, unchanged. -->
   <link name="upper_left_wheel_shaft">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL"/>
+        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL" scale="0.001 0.001 0.001"/>
       </geometry>
+      <material name="mecanum_metal"/>
     </visual>
   </link>
   <joint name="upper_left_wheel_shaft_joint" type="fixed">
@@ -71,8 +111,9 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL"/>
+        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL" scale="0.001 0.001 0.001"/>
       </geometry>
+      <material name="mecanum_metal"/>
     </visual>
   </link>
   <joint name="upper_right_wheel_shaft_joint" type="fixed">
@@ -85,8 +126,9 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL"/>
+        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL" scale="0.001 0.001 0.001"/>
       </geometry>
+      <material name="mecanum_metal"/>
     </visual>
   </link>
   <joint name="lower_left_wheel_shaft_joint" type="fixed">
@@ -99,8 +141,9 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL"/>
+        <mesh filename="package://mecanum_description/meshes/wheel_shaft.STL" scale="0.001 0.001 0.001"/>
       </geometry>
+      <material name="mecanum_metal"/>
     </visual>
   </link>
   <joint name="lower_right_wheel_shaft_joint" type="fixed">
@@ -113,8 +156,9 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://mecanum_description/meshes/urm04.STL"/>
+        <mesh filename="package://mecanum_description/meshes/urm04.STL" scale="0.001 0.001 0.001"/>
       </geometry>
+      <material name="mecanum_sensor"/>
     </visual>
   </link>
   <joint name="front_sensor_joint" type="fixed">
@@ -127,8 +171,9 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://mecanum_description/meshes/urm04.STL"/>
+        <mesh filename="package://mecanum_description/meshes/urm04.STL" scale="0.001 0.001 0.001"/>
       </geometry>
+      <material name="mecanum_sensor"/>
     </visual>
   </link>
   <joint name="left_sensor_joint" type="fixed">
@@ -141,8 +186,9 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://mecanum_description/meshes/urm04.STL"/>
+        <mesh filename="package://mecanum_description/meshes/urm04.STL" scale="0.001 0.001 0.001"/>
       </geometry>
+      <material name="mecanum_sensor"/>
     </visual>
   </link>
   <joint name="right_sensor_joint" type="fixed">
@@ -155,8 +201,9 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://mecanum_description/meshes/urm04.STL"/>
+        <mesh filename="package://mecanum_description/meshes/urm04.STL" scale="0.001 0.001 0.001"/>
       </geometry>
+      <material name="mecanum_sensor"/>
     </visual>
   </link>
   <joint name="rear_sensor_joint" type="fixed">
