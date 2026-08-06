@@ -87,6 +87,44 @@ class MecanumVisualAssetsTest(unittest.TestCase):
         for mesh in meshes:
             self.assertEqual(mesh.attrib["scale"], "0.001 0.001 0.001")
 
+    def test_all_mesh_references_resolve_inside_this_package(self):
+        expected_prefix = "package://mecanum_description/"
+        referenced = set()
+        for mesh in self.root.findall(".//mesh"):
+            filename = mesh.attrib["filename"]
+            self.assertTrue(filename.startswith(expected_prefix), filename)
+            relative = filename[len(expected_prefix) :]
+            self.assertFalse(Path(relative).is_absolute(), relative)
+            self.assertNotIn("..", Path(relative).parts)
+            self.assertTrue((PACKAGE_ROOT / relative).is_file(), relative)
+            referenced.add(relative)
+
+        self.assertEqual(
+            referenced,
+            {
+                "meshes/mecanum_wheel_left.STL",
+                "meshes/mecanum_wheel_right.STL",
+                "meshes/nexus_base_link.STL",
+                "meshes/urm04.STL",
+                "meshes/wheel_shaft.STL",
+            },
+        )
+
+    def test_package_remains_visual_only(self):
+        self.assertEqual(self.root.tag, "robot")
+        self.assertEqual(self.root.attrib["name"], "xgc2_mecanum_ugv")
+        self.assertGreater(len(self.root.findall(".//visual")), 0)
+        for forbidden in (
+            "collision",
+            "inertial",
+            "transmission",
+            "gazebo",
+            "plugin",
+        ):
+            self.assertEqual(self.root.findall(f".//{forbidden}"), [], forbidden)
+        for joint in self.root.findall("joint"):
+            self.assertEqual(joint.attrib["type"], "fixed", joint.attrib["name"])
+
 
 if __name__ == "__main__":
     unittest.main()
