@@ -30,4 +30,6 @@ sha256sum meshes/*.STL urdf/mecanum_visual.urdf | sort >"${actual_hashes}"
 sort -o "${expected_hashes}" "${expected_hashes}"
 diff -u "${expected_hashes}" "${actual_hashes}"
 
+python3 test/test_visual_assets.py
+
 echo "Package compliance checks passed."
