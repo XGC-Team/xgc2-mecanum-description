@@ -1,46 +1,51 @@
 schema: xgc2.product.v1
-id: xgc2-mecanum-description
-name: XGC2 Mecanum Description
-version: 0.1.0-8
-kind: ros1-apt
-summary: ROS Noetic visual description assets for the XGC2 Mecanum UGV.
+id: xgc2-ros-jazzy-mecanum-description
+name: XGC2 ROS Jazzy Mecanum Description
+version: 0.1.0-1
+kind: ros2-apt
+summary: ROS 2 Jazzy visual description assets for the XGC2 Mecanum UGV.
 groups:
 - gazebo-sim
 - ugv-tracking
 ros:
-  distro: noetic
+  distro: jazzy
   packages:
   - mecanum_description
 apt:
-  distribution: focal
+  distribution: noble
   install:
-  - ros-noetic-xgc2-mecanum-description
+  - ros-jazzy-xgc2-mecanum-description
   packages:
-  - ros-noetic-xgc2-mecanum-description
+  - ros-jazzy-xgc2-mecanum-description
   package_architectures:
-    ros-noetic-xgc2-mecanum-description:
+    ros-jazzy-xgc2-mecanum-description:
     - amd64
     - arm64
   depends:
-  - ros-noetic-urdf
+  - ros-jazzy-urdf
 usage:
   install: 'sudo apt update
 
-    sudo apt install ros-noetic-xgc2-mecanum-description
+    sudo apt install ros-jazzy-xgc2-mecanum-description
 
     '
-  smoke_test: 'rospack find mecanum_description
+  smoke_test: 'source /opt/ros/jazzy/setup.bash
 
-    test -f /opt/ros/noetic/share/mecanum_description/urdf/mecanum_visual.urdf
+    ros2 pkg prefix mecanum_description
+
+    test -f /opt/ros/jazzy/share/mecanum_description/urdf/mecanum_visual.urdf
 
     '
 ownership:
   paths:
-  - /opt/ros/noetic/share/mecanum_description
+  - /opt/ros/jazzy/share/mecanum_description
+  - /opt/ros/jazzy/share/ament_index/resource_index/packages/mecanum_description
+  - /opt/ros/jazzy/share/ament_index/resource_index/package_run_dependencies/mecanum_description
+  - /opt/ros/jazzy/share/ament_index/resource_index/parent_prefix_path/mecanum_description
 release:
   repository: lxk36/xgc2-mecanum-description
-  ref: noetic
+  ref: jazzy
   workflow: release.yml
   ci_workflow: ci.yml
   apt_versions:
-    focal: 0.1.0-8
+    noble: 0.1.0-1
