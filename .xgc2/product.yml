@@ -38,7 +38,7 @@ ownership:
   paths:
   - /opt/ros/noetic/share/mecanum_description
 release:
-  repository: lxk36/xgc2-mecanum-description
+  repository: XGC-Team/xgc2-mecanum-description
   ref: noetic
   workflow: release.yml
   ci_workflow: ci.yml
