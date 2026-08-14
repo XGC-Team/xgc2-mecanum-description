@@ -43,7 +43,7 @@ ownership:
   - /opt/ros/jazzy/share/ament_index/resource_index/package_run_dependencies/mecanum_description
   - /opt/ros/jazzy/share/ament_index/resource_index/parent_prefix_path/mecanum_description
 release:
-  repository: lxk36/xgc2-mecanum-description
+  repository: XGC-Team/xgc2-mecanum-description
   ref: jazzy
   workflow: release.yml
   ci_workflow: ci.yml
