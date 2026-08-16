@@ -2,7 +2,7 @@
 set -euo pipefail
 
 grep -q '^id: xgc2-mecanum-description$' .xgc2/product.yml
-grep -q '^version: 0.1.0-8$' .xgc2/product.yml
+grep -q '^version: 0.1.0-9$' .xgc2/product.yml
 grep -q '^kind: ros1-apt$' .xgc2/product.yml
 grep -q '^  distro: noetic$' .xgc2/product.yml
 grep -q '<name>mecanum_description</name>' package.xml
